@@ -43,6 +43,8 @@ if __name__ == '__main__':
     argTables = args.pop(0)
     tables = list(set(argTables))
     duplicatedTables = [table for table in argTables if table not in tables]
+    print('The following duplicated tables have been filtered out: ')
+    print(*duplicatedTables)
 	tablesManagement = TablesManagement(tables)
 	tablesManagement.generateRenameSqlScripts()
 	tablesManagement.generateRollBackSqlScripts()
