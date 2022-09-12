@@ -40,6 +40,9 @@ class TablesManagement(object):
 
 class files_TManagement(object):
 if __name__ == '__main__':
+    args = sys.argv
+    argTables = args.pop(0)
+    tables = list(set(argTables))
 	tablesManagement = TablesManagement(tables)
 	tablesManagement.generateRenameSqlScripts()
 	tablesManagement.generateRollBackSqlScripts()
