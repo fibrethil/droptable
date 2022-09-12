@@ -38,11 +38,11 @@ class TablesManagement(object):
             with open(os.path.join(table, 'drop.sql'), 'w') as sqlDropTable:
                 sqlDropTable.write('DROP TABLE ' + table + ';';
 
-class files_TManagement(object):
 if __name__ == '__main__':
     args = sys.argv
     argTables = args.pop(0)
     tables = list(set(argTables))
+    duplicatedTables = [table for table in argTables if table not in tables]
 	tablesManagement = TablesManagement(tables)
 	tablesManagement.generateRenameSqlScripts()
 	tablesManagement.generateRollBackSqlScripts()
