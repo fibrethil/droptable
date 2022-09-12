@@ -11,32 +11,39 @@ class TablesManagement(object):
 
     def generateRenameSqlScripts(self):
         for table in self.tables:
-            generateRenameSqlScript(self, table)
+            tableManagement = TableManagement(table)
+            tableManagement.generateRenameSqlScript()
 
     def generateRollBackSqlScripts(self):
         for table in self.tables:
-            generateRollBackSqlScript(self, table)
+            tableManagement = TableManagement(table)
+            tableManagement.generateRollBackSqlScript()
 
     def generateDropSqlScripts(self):
         for table in self.tables:
-            generateDropSqlScript(self, table)
+            tableManagement = TableManagement(table)
+            tableManagement.generateDropSqlScript()
             
-    def generateRenameSqlScript(self, table):
-        if os.path.exists(table):
-            with open(os.path.join(table, 'rename.sql'), 'w') as sqlRenameTable:
-                sqlRenameTable.write('RENAME ' + table + ' TO ' + 'drop_' + table + ';'
+class TableManagement(object):
+    def __init__(self, table):
+        self.table = table
 
-    def generateRollBackSqlScript(self, table):
-        if os.path.exists(table):
-            tableComponents = table.split('_');
-            originalTable = tableComponents[len(tableComponents)-1]
-            with open(os.path.join(table, 'rollback.sql'), 'w') as sqlRollBackTable:
-                sqlRollBackTable.write('RENAME ' + table + ' TO ' + originalTable + ';';
+    def generateRenameSqlScript(self):
+        if os.path.exists(self.table):
+            with open(os.path.join(self.table, 'rename.sql'), 'w') as sqlRenameTable:
+                sqlRenameTable.write('RENAME ' + self.table + ' TO ' + 'drop_' + self.table + ';'
 
-    def generateDropSqlScript(self, table):
-        if os.path.exists(table):
-            with open(os.path.join(table, 'drop.sql'), 'w') as sqlDropTable:
-                sqlDropTable.write('DROP TABLE ' + table + ';';
+    def generateRollBackSqlScript(self):
+        if os.path.exists(self.table):
+            tableComponents = self.table.split('_');
+            originalTable = self.tableComponents[len(tableComponents)-1]
+            with open(os.path.join(self.table, 'rollback.sql'), 'w') as sqlRollBackTable:
+                sqlRollBackTable.write('RENAME ' + self.table + ' TO ' + originalTable + ';';
+
+    def generateDropSqlScript(self):
+        if os.path.exists(self.table):
+            with open(os.path.join(self.table, 'drop.sql'), 'w') as sqlDropTable:
+                sqlDropTable.write('DROP TABLE ' + self.table + ';';
 
 if __name__ == '__main__':
     args = sys.argv
