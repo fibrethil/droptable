@@ -5,20 +5,20 @@ class TablesManagement(object):
     def __init__(self, tables):
         self.currentPath = os.getcwd()
         self.tables = tables
-        for table in tables:
+        for table in self.tables:
             if not os.path.exists(table):
                 os.mkdir(table)
 
     def generateRenameSqlScripts(self):
-        for table in tables:
+        for table in self.tables:
             generateRenameSqlScript(self, table)
 
     def generateRollBackSqlScripts(self):
-        for table in tables:
+        for table in self.tables:
             generateRollBackSqlScript(self, table)
 
     def generateDropSqlScripts(self):
-        for table in tables:
+        for table in self.tables:
             generateDropSqlScript(self, table)
             
     def generateRenameSqlScript(self, table):
@@ -42,9 +42,11 @@ if __name__ == '__main__':
     args = sys.argv
     argTables = args.pop(0)
     tables = list(set(argTables))
+
     duplicatedTables = [table for table in argTables if table not in tables]
     print('The following duplicated tables have been filtered out: ')
     print(*duplicatedTables)
+
 	tablesManagement = TablesManagement(tables)
 	tablesManagement.generateRenameSqlScripts()
 	tablesManagement.generateRollBackSqlScripts()
