@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# vi 
+*.swp
+*.swo
+*.sw[mn]
