@@ -35,10 +35,9 @@ class TableManagement(object):
 
     def generateRollBackSqlScript(self):
         if os.path.exists(self.table):
-            tableComponents = self.table.split('_');
-            originalTable = tableComponents[len(tableComponents)-1]
+            droppedTable = 'drop_' + self.table
             with open(os.path.join(self.table, 'rollback.sql'), 'w') as sqlRollBackTable:
-                sqlRollBackTable.write('RENAME ' + self.table + ' TO ' + originalTable + ';')
+                sqlRollBackTable.write('RENAME ' + droppedTable + ' TO ' + self.table + ';')
 
     def generateDropSqlScript(self):
         if os.path.exists(self.table):
@@ -47,10 +46,13 @@ class TableManagement(object):
 
 if __name__ == '__main__':
     args = sys.argv
-    argTables = args.pop(0)
-    tables = list(set(argTables))
+    print(args)
+    args.pop(0)
+    print(args)
+    tables = list(set(args))
+    print(tables)
     
-    duplicatedTables = [table for table in argTables if table not in tables]
+    duplicatedTables = [table for table in args if table not in tables]
     print('The following duplicated tables have been filtered out: ')
     print(*duplicatedTables)
     
