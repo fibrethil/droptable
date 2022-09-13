@@ -42,7 +42,7 @@ class TableManagement(object):
     def generateDropSqlScript(self):
         if os.path.exists(self.table):
             with open(os.path.join(self.table, 'drop.sql'), 'w') as sqlDropTable:
-                sqlDropTable.write('DROP TABLE ' + self.table + ';')
+                sqlDropTable.write('DROP TABLE ' + 'drop_' + self.table + ';')
 
 if __name__ == '__main__':
     args = sys.argv
