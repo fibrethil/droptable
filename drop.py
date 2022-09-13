@@ -31,30 +31,30 @@ class TableManagement(object):
     def generateRenameSqlScript(self):
         if os.path.exists(self.table):
             with open(os.path.join(self.table, 'rename.sql'), 'w') as sqlRenameTable:
-                sqlRenameTable.write('RENAME ' + self.table + ' TO ' + 'drop_' + self.table + ';'
+                sqlRenameTable.write('RENAME ' + self.table + ' TO ' + 'drop_' + self.table + ';')
 
     def generateRollBackSqlScript(self):
         if os.path.exists(self.table):
             tableComponents = self.table.split('_');
-            originalTable = self.tableComponents[len(tableComponents)-1]
+            originalTable = tableComponents[len(tableComponents)-1]
             with open(os.path.join(self.table, 'rollback.sql'), 'w') as sqlRollBackTable:
-                sqlRollBackTable.write('RENAME ' + self.table + ' TO ' + originalTable + ';';
+                sqlRollBackTable.write('RENAME ' + self.table + ' TO ' + originalTable + ';')
 
     def generateDropSqlScript(self):
         if os.path.exists(self.table):
             with open(os.path.join(self.table, 'drop.sql'), 'w') as sqlDropTable:
-                sqlDropTable.write('DROP TABLE ' + self.table + ';';
+                sqlDropTable.write('DROP TABLE ' + self.table + ';')
 
 if __name__ == '__main__':
     args = sys.argv
     argTables = args.pop(0)
     tables = list(set(argTables))
-
+    
     duplicatedTables = [table for table in argTables if table not in tables]
     print('The following duplicated tables have been filtered out: ')
     print(*duplicatedTables)
-
-	tablesManagement = TablesManagement(tables)
-	tablesManagement.generateRenameSqlScripts()
-	tablesManagement.generateRollBackSqlScripts()
-	tablesManagement.generateDropSqlScripts()
+    
+    tablesManagement = TablesManagement(tables)
+    tablesManagement.generateRenameSqlScripts()
+    tablesManagement.generateRollBackSqlScripts()
+    tablesManagement.generateDropSqlScripts()
